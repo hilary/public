@@ -1,7 +1,16 @@
 class StringCalculator
 
+  # Was not sure if it was supposed to detect and positively reject invalid 
+  # formats, so the code does. In general, would not do so.
   def Add(numbers)
-    numbers.split(',').map{|x| x.to_i}.reduce(0, :+)
+    addends = numbers.split(/,|\n/).map do |x| 
+      if x == ""
+        raise "Invalid format"
+      else
+        x.to_i
+      end
+    end
+    addends.reduce(0, :+)
   end
 
 end
@@ -39,6 +48,12 @@ class TestStringCalculator < Minitest::Spec
   describe 'a string with many numbers separated by commas' do
     it 'returns the sum' do
       @calc.Add("2,3,42,1").must_equal 48
+    end
+  end
+
+  describe 'a string with numbers separated by newlines' do
+    it 'returns the sum' do
+      @calc.Add("2\n3,42,1").must_equal 48
     end
   end
 
