@@ -64,4 +64,28 @@ class TestStringCalculator < Minitest::Spec
     end
   end
 
+  describe 'negative numbers' do
+
+    it "throws an exception" do
+      assert_raises StringCalculator::NegativeAddendError do
+        StringCalculator.new.Add("-1")
+      end
+    end
+
+    it "includes the message 'negatives not allowed'" do
+      err = assert_raises StringCalculator::NegativeAddendError do
+        StringCalculator.new.Add("-1")
+      end
+      assert_match /negatives not allowed/, err.message
+    end
+
+    it "includes all the negative addends" do
+      err = assert_raises StringCalculator::NegativeAddendError do
+        StringCalculator.new.Add("-1,2,-2")
+      end
+      assert_match /-1.*-2/, err.message
+    end
+
+  end
+
 end
