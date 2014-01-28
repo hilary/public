@@ -36,4 +36,10 @@ class TestStringCalculator < Minitest::Spec
     end
   end
 
+  describe 'a string with many numbers separated by commas' do
+    it 'returns the sum' do
+      @calc.Add("2,3,42,1").must_equal 48
+    end
+  end
+
 end
